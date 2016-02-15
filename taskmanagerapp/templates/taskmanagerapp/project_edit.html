@@ -1,0 +1,11 @@
+{% extends 'taskmanagerapp/base.html' %}
+{% load bootstrap3 %}
+{% block content %}
+<form method="post" class="project-form">
+  {% csrf_token %}
+  {% bootstrap_form form %}
+  {% buttons %}
+      <button type="submit" class="btn btn-primary">Submit</button>
+  {% endbuttons %}
+</form>
+{% endblock %}
