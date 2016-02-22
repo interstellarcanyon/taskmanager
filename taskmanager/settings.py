@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'taskmanagerapp',
     'bootstrap3',
+    'phonenumber_field',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -122,3 +123,13 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# Phonenumber validation, set to default settings
+PHONENUMBER_DB_FORMAT = 'E164'
+
+LOGIN_REDIRECT_URL = '/'
+
+AUTH_PROFILE_MODULE = "taskmanagerapp.UserProfile"

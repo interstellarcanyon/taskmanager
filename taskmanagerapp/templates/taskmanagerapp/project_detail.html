@@ -1,57 +1,87 @@
 {% extends 'taskmanagerapp/base.html' %}
 {% block content %}
-  <div class="page-header">
-    <h1>Project</h1>
-  </div>
-  <div class="panel panel-default">
-    <!-- Default panel contents -->
-    <div class="panel-heading">
-      Project
-    </div>
-      <!-- Table -->
-      <table class="table table-hover">
-        <thead>
-          <tr>
-            <th>Project</th>
-            <th>Author</th>
-            <th>Created</th>
-            <th>Last update</th>
-            <th>Users</th>
-            <th>Status</th>
-            <th>deadline</th>
-            <th>Priority</th>
-            <th>description</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>{{ proj.title }}</td>
-            <td>{{ proj.author }}</td>
-            <td><span class="label label-success">{{ proj.project_status }}</span></td>
-            <td><span class="label label-success">{{ proj.priority }}</span></td>
-            <td>{% for user in proj.assigned_users.all %}
-                  {{ user }}
-                {% endfor %}
-            </td>
-            <td>{{ proj.project_status }}</td>
-            <td>{{ proj.deadline }}</td>
-            <td>{{ proj.priority }}</td>
-            <td>{{ proj.description }}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div><!-- EndTable -->
-
-    <div class="panel panel-default">
-      <div class="panel-body">
-        <h1>{{ proj.title }}</h1>
-        <a href="{% url 'project_edit' pk=proj.pk %}" class="btn btn-primary btn-xs" role="button">Edit Project</a>
-        <div class="row">
-          <div class="col-md-6">.col-md-6</div>
-          <div class="col-md-6">.col-md-6</div>
-        </div>
+<div class="page-header">
+  <h1>{{ proj.title }}</h1>
+  <ol class="breadcrumb">
+    <li><a href="{% url 'project_list' %}">Overview</a></li>
+    <li class="active">Project Details</li>
+  </ol>
+  <h5><span class="glyphicon glyphicon-time"></span> By {{ proj.author }}, {{ proj.created_at }}</h5>
+  <a href="{% url 'project_edit' pk=proj.pk %}" class="btn btn-primary btn-xs" role="button">Edit Project</a>
+</div>
+<div class="panel panel-default">
+    <!-- Table -->
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>Deadline</th>
+          <th>Last update</th>
+          <th>Users</th>
+          <th>Status</th>
+          <th>Priority</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>{{ proj.deadline }}</td>
+          <td>{{ proj.last_update }}</td>
+          <td>{% for user in proj.assigned_users.all %}
+                {{ user }},
+              {% endfor %}
+          </td>
+          <td><span class="label label-success">{{ proj.project_status }}</span></td>
+          <td><span class="label label-success">{{ proj.priority }}</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div><!-- EndTable -->
+<div class="panel panel-default">
+  <div class="panel-body">
+    <h2>Description</h2>
+    <hr>
+    <div class="row">
+      <div class="col-md-12">
+        {{ proj.description }}
       </div>
-      <div class="panel-footer">Panel footer</div>
     </div>
+  </div>
+</div>
+
+<div class="panel panel-default">
+  <div class="panel-body">
+    <h2>Tasks</h2>
+    <a href="{% url 'task_edit' pk=proj.pk %}" class="btn btn-primary btn-xs" role="button">Add Tasks</a>
+    <hr>
+    <div class="row">
+      <div class="col-md-12">
+        {% for task in proj.tasks.all %}
+          <h5><span class="glyphicon glyphicon-time"></span> By {{ task.author }}</h5>
+          {{ task.title }}
+          {%  empty %}
+          hello
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="panel panel-default">
+  <div class="panel-body">
+    <h2>Comments</h2>
+    <a href="{% url 'add_comment_to_project' pk=proj.pk %}" class="btn btn-primary btn-xs" role="button">Add Comment</a>
+    <hr>
+    <div class="row">
+      <div class="col-md-12">
+        {% for comment in proj.comments.all %}
+          <h5><span class="glyphicon glyphicon-time"></span> By {{ comment.author }}, {{ comment.created_at }}</h5>
+          {{ comment.description }}
+          <hr>
+          {%  empty %}
+          hello
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
 
 {% endblock %}

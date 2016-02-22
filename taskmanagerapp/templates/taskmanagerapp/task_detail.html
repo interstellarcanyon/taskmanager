@@ -1,0 +1,23 @@
+{% extends 'taskmanagerapp/base.html' %}
+{% block content %}
+<div class="page-header">
+  <h1>{{ task.title }}</h1>
+  <ol class="breadcrumb">
+    <li><a href="{% url 'project_list' %}">Overview</a></li>
+    <li class="active">Project Details</li>
+    <li class="active">Task Detail</li>
+  </ol>
+</div>
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <a href="{% url 'task_edit' pk=task.pk %}" class="btn btn-primary btn-xs" role="button">Edit Task</a>
+        <hr>
+        <div class="row">
+          <div class="col-md-12">
+            {{ task.description }}
+            <h5><span class="glyphicon glyphicon-time"></span> By {{ task.author }}, {{ task.start_date }}</h5>
+          </div>
+        </div>
+      </div>
+
+{% endblock %}

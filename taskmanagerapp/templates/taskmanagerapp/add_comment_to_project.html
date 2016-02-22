@@ -2,14 +2,15 @@
 {% load bootstrap3 %}
 {% block content %}
 <div class="page-header">
-  <h1>Edit Project Details</h1>
+  <h1>Add Comments</h1>
   <ol class="breadcrumb">
     <li><a href="{% url 'project_list' %}">Home</a></li>
-    <li class="active">Edit Project</li>
+    <li class="">Project</li>
+    <li class="active">Add Comment</li>
   </ol>
 </div>
 
-<form method="post" class="project-form">
+<form method="post" class="comment-form">
   {% csrf_token %}
   {% bootstrap_form form %}
   {% buttons %}

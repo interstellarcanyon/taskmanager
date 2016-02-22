@@ -1,11 +1,19 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
+
+    {% load staticfiles %}
+    <link rel="stylesheet" type="text/css" href="{% static "tweaks.css" %}" />
+
     <title>Task Management</title>
+
   </head>
   <body>
     {# Load the tag library #}
@@ -17,9 +25,74 @@
 
     {# Display django.contrib.messages as Bootstrap alerts #}
     {% bootstrap_messages %}
-    <div class="container">
-      {% block content %}
-      {% endblock %}
-    </div><!-- EndContainer -->
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Task Manager</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+            {% if user.is_authenticated %}
+            <li class=" dropdown"><a href="#" class="dropdown-toggle active" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ user.username }} <i class="glyphicon glyphicon-user"></i><span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li><a href="#">Change Password</a></li>
+                    <li><a href="#">My Profile</a></li>
+                </ul>
+            </li>
+            <li>
+              <a href="{% url 'django.contrib.auth.views.logout' %}">Log out</a>
+            </li>
+            {% else %}
+            <li>
+              <a href="{% url 'django.contrib.auth.views.login' %}">Log in</a>
+            </li>
+            <li>
+              <a href="{% url 'register' %}">Register</a>
+            </li>
+            {% endif %}
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <div class="container-fluid">
+      <div class="row content">
+        {% if user.is_authenticated %}
+        <div class="col-sm-2 col-md-2 col-lg-2 sidenav">
+          <br>
+          <br>
+          <br>
+            <div class="row">
+              <div class="col-sm-12 col-md-8 col-md-offset-2">
+                <img src="{{ user.userprofile.photo.url }}" alt="User profile image" class="img-responsive img-circle">
+              </div>
+            </div>
+            <h3 class="text-center">{{ user.username }}</h3>
+            <h4 class="text-center">{{ user.userprofile.team }}</h4>
+            <h4 class="text-center">{{ user.userprofile.role }}</h4>
+          <ul class="nav nav-stacked">
+            <li><a href="{% url 'project_list' %}"><i class="glyphicon glyphicon-list-alt"></i> Overview</a></li>
+            <li><a href=""><i class="glyphicon glyphicon-bell"></i> Notifications</a></li>
+            <li><a href=""><i class="glyphicon glyphicon-cog"></i> Settings</a></li>
+            <li><a href=""><i class="glyphicon glyphicon-info-sign"></i> About</a></li>
+          </ul>
+        </div>
+        {% else %}
+        {% endif %}
+        <div class="col-sm-10 col-md-10 col-lg-10">
+          <br>
+          <br>
+          {% block content %}
+          {% endblock %}
+        </div>
+      </div>
+    </div>
   </body>
 </html>

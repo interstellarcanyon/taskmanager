@@ -2,14 +2,14 @@
 {% load bootstrap3 %}
 {% block content %}
 <div class="page-header">
-  <h1>Edit Project Details</h1>
+  <h1>Edit Task</h1>
   <ol class="breadcrumb">
-    <li><a href="{% url 'project_list' %}">Home</a></li>
-    <li class="active">Edit Project</li>
+    <li><a href="{% url 'project_list' %}">Overview</a></li>
+    <li class="">Project Details</li>
+    <li class="active">Edit Task</li>
   </ol>
 </div>
-
-<form method="post" class="project-form">
+<form method="post" class="task-form">
   {% csrf_token %}
   {% bootstrap_form form %}
   {% buttons %}
