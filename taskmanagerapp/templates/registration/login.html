@@ -1,5 +1,5 @@
 {% extends "taskmanagerapp/base.html" %}
-
+{% load bootstrap3 %}
 {% block content %}
 <div class="row">
   <div class="col-md-offset-2 col-lg-6 col-lg-offset-4">
@@ -10,14 +10,10 @@
       <form method="post" action="{% url 'django.contrib.auth.views.login' %}">
         {% csrf_token %}
         <div class="form-group">
-          <label for="exampleInputEmail1">Email address</label>
-          {{ form.username }}
-          <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email">
+          {% bootstrap_field form.username %}
         </div>
         <div class="form-group">
-          <label for="exampleInputPassword1">Password</label>
-          {{ form.password }}
-          <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+          {% bootstrap_field form.password %}
         </div>
         <button type="submit" class="btn btn-default">Login</button>
         <input type="hidden" name="next" value="{{ next }}" />
